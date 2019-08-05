@@ -1,3 +1,7 @@
+server:
+  port: 80
+  servlet:
+    context-path: /demo
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
@@ -10,3 +14,5 @@ spring:
     #打印sql语句
   jpa:
     show-sql: true
+
+
