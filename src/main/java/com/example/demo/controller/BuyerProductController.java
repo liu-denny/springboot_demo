@@ -8,6 +8,8 @@ import com.example.demo.dataobject.ProductInfo;
 import com.example.demo.service.CategoryService;
 import com.example.demo.service.ProductService;
 import com.example.demo.utils.ResultVOUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/buyer/product")
+@Api(value = "商品Controller", tags = {"商品Controller说明"})
 public class BuyerProductController {
     @Autowired
     private ProductService productService;
@@ -33,6 +36,7 @@ public class BuyerProductController {
     private CategoryService categoryService;
 
     @GetMapping("/list")
+    @ApiOperation(value = "查询所有商品", notes = "查询所有商品")
     public ResultVO list() {
         //1. 查询所有的上架商品
         List<ProductInfo> productInfoList = productService.findUpAll();

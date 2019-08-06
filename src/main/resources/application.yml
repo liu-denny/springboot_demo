@@ -14,5 +14,10 @@ spring:
     #打印sql语句
   jpa:
     show-sql: true
+  jackson:
+    default-property-inclusion: non_null
+
+
+
 
 
