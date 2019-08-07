@@ -13,6 +13,7 @@ import com.example.demo.enums.PayStatusEnum;
 import com.example.demo.enums.ResultEnum;
 import com.example.demo.exception.SellException;
 import com.example.demo.service.OrderService;
+import com.example.demo.service.PayService;
 import com.example.demo.service.ProductService;
 import com.example.demo.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +48,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderMasterDao orderMasterDao;
+
+    @Autowired
+    private PayService payService;
 
     @Override
     @Transactional
@@ -141,7 +145,7 @@ public class OrderServiceImpl implements OrderService {
         productService.increaseStock(cartDTOList);
         //如果已支付, 需要退款
         if(orderDTO.getPayStatus().equals(PayStatusEnum.SUCCESS)){
-            //TODO
+            payService.refund(orderDTO);
         }
         return orderDTO;
     }

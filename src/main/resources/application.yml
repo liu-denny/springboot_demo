@@ -22,7 +22,10 @@ wechat:
   mpAppSecret: 56e1db359767a1349dc9f125a61a9f7c
   mchId: 123
   mchKey: 123
+  #证书
   keyPath: 123
+  #异步通知地址，必须
+  notifyUrl: 123
 
 wechaturl:
   wechatMpAuthorize: http://denny.ngrok.xiaomiqiu.cn

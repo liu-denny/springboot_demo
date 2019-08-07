@@ -26,7 +26,7 @@ import java.net.URLEncoder;
 @Controller
 @RequestMapping("/wechat")
 @Slf4j
-@Api(value = "微信Controller", tags = {"微信Controller说明"})
+@Api(value = "微信登陆Controller", tags = {"微信登陆Controller说明"})
 public class WechatController {
     @Autowired
     private WxMpService wxMpService;
