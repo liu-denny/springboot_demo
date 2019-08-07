@@ -1,7 +1,7 @@
 server:
   port: 80
-  servlet:
-    context-path: /demo
+#  servlet:
+#    context-path: /demo
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
@@ -18,8 +18,18 @@ spring:
     default-property-inclusion: non_null
 
 wechat:
-  mpAppID:
-  mpAppSecret:
+  mpAppID: wx7a7ba703beebd371
+  mpAppSecret: 56e1db359767a1349dc9f125a61a9f7c
+  mchId: 123
+  mchKey: 123
+  keyPath: 123
+
+wechaturl:
+  wechatMpAuthorize: http://denny.ngrok.xiaomiqiu.cn
+  wechatOpenAuthorize: 123
+  sell: 123
+
+
 
 
 
