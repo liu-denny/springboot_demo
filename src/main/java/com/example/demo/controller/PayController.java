@@ -7,6 +7,8 @@ import com.example.demo.service.OrderService;
 import com.example.demo.service.PayService;
 import com.lly835.bestpay.model.PayResponse;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +32,9 @@ public class PayController {
 
 
     @GetMapping("/create")
-    public ModelAndView create(@RequestParam("orderId") String orderId,
-                               @RequestParam("returnUrl") String returnUrl,
+    @ApiOperation(value = "创建支付订单", notes = "创建支付订单")
+    public ModelAndView create(@ApiParam(name = "orderId", value = "订单Id",required = true)@RequestParam("orderId") String orderId,
+                               @ApiParam(name = "returnUrl", value = "回调链接",required = true)@RequestParam("returnUrl") String returnUrl,
                                Map<String, Object> map) {
         //1. 查询订单
         OrderDTO orderDTO = orderService.findOne(orderId);

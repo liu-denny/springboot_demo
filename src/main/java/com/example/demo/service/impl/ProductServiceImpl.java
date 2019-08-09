@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author yudong
@@ -47,13 +48,16 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void increaseStock(List<CartDTO> cartDTOList) {
         for(CartDTO cartDTO:cartDTOList){
-            ProductInfo productInfo = repository.findById(cartDTO.getProductId()).get();
-            if(productInfo == null){
+            Optional optional = repository.findById(cartDTO.getProductId());
+            if(optional.isPresent()){
                 throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+            }else {
+                ProductInfo productInfo = (ProductInfo)optional.get();
+                Integer result = productInfo.getProductStock() + cartDTO.getProductQuantity();
+                productInfo.setProductStock(result);
+                repository.save(productInfo);
             }
-            Integer result = productInfo.getProductStock() + cartDTO.getProductQuantity();
-            productInfo.setProductStock(result);
-            repository.save(productInfo);
+
         }
     }
 
@@ -61,16 +65,50 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public void decreaseStock(List<CartDTO> cartDTOList) {
         for(CartDTO cartDTO:cartDTOList){
-            ProductInfo productInfo = repository.findById(cartDTO.getProductId()).get();
-            if(productInfo == null){
+            Optional optional = repository.findById(cartDTO.getProductId());
+            if(!optional.isPresent()){
                 throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+            }else {
+                ProductInfo productInfo = (ProductInfo)optional.get();
+                Integer result = productInfo.getProductStock() - cartDTO.getProductQuantity();
+                if(result < 0){
+                    throw new SellException(ResultEnum.PRODUCT_STOCK_ERROR);
+                }
+                productInfo.setProductStock(result);
+                repository.save(productInfo);
             }
-            Integer result = productInfo.getProductStock() - cartDTO.getProductQuantity();
-            if(result < 0){
-                throw new SellException(ResultEnum.PRODUCT_STOCK_ERROR);
-            }
-            productInfo.setProductStock(result);
-            repository.save(productInfo);
+
         }
     }
+
+    @Override
+    public ProductInfo onSale(String productId) {
+        Optional optional = repository.findById(productId);
+        if(!optional.isPresent()){
+            throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+        }else {
+            ProductInfo productInfo = (ProductInfo)optional.get();
+            if(productInfo.getProductStatusEnum().equals(ProductStatusEnum.UP)){
+                throw new SellException(ResultEnum.PRODUCT_STATUS_ERROR);
+            }
+            productInfo.setProductStatus(ProductStatusEnum.UP.getCode());
+            return repository.save(productInfo);
+        }
+    }
+
+    @Override
+    public ProductInfo offSale(String productId) {
+        Optional optional = repository.findById(productId);
+        if(!optional.isPresent()){
+            throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+        }else {
+            ProductInfo productInfo = (ProductInfo)optional.get();
+            if(productInfo.getProductStatusEnum().equals(ProductStatusEnum.DOWN)){
+                throw new SellException(ResultEnum.PRODUCT_STATUS_ERROR);
+            }
+            productInfo.setProductStatus(ProductStatusEnum.DOWN.getCode());
+            return repository.save(productInfo);
+        }
+    }
+
 }

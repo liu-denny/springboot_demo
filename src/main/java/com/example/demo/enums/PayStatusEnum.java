@@ -7,7 +7,7 @@ import lombok.Getter;
  * @create 2019-08-05 17:49
  */
 @Getter
-public enum PayStatusEnum {
+public enum PayStatusEnum implements CodeEnum{
 
     WAIT(0, "等待支付"),
     SUCCESS(1, "支付成功"),

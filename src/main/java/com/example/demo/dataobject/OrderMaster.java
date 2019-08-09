@@ -2,7 +2,10 @@ package com.example.demo.dataobject;
 
 import com.example.demo.enums.OrderStatusEnum;
 import com.example.demo.enums.PayStatusEnum;
+import com.example.demo.utils.EnumUtil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.aspectj.weaver.ast.Or;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
@@ -48,4 +51,7 @@ public class OrderMaster {
 
     /** 更新时间. */
     private Date updateTime;
+
+
+
 }

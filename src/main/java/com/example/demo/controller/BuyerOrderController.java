@@ -65,8 +65,8 @@ public class BuyerOrderController {
     @GetMapping("/list")
     @ApiOperation(value = "订单列表", notes = "订单列表")
     public ResultVO list(@ApiParam(name = "openid", value = "用户id",required = true)@RequestParam("openid") String openid,
-                                         @ApiParam(name = "page", value = "页码")@RequestParam(value = "page", defaultValue = "0") Integer page,
-                                         @ApiParam(name = "size", value = "数量")@RequestParam(value = "size", defaultValue = "10") Integer size) {
+                         @ApiParam(name = "page", value = "页码")@RequestParam(value = "page", defaultValue = "0") Integer page,
+                         @ApiParam(name = "size", value = "数量")@RequestParam(value = "size", defaultValue = "10") Integer size) {
         if (StringUtils.isEmpty(openid)) {
             log.error("【查询订单列表】openid为空");
             throw new SellException(ResultEnum.PARAM_ERROR);
