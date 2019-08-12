@@ -31,6 +31,4 @@ public class WechatMpConfig {
         wxMpConfigStorage.setSecret(wechatAccountConfig.getMpAppSecret());
         return wxMpConfigStorage;
     }
-
-
 }

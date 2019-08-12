@@ -37,6 +37,7 @@ public class WechatController {
     @Autowired
     private WxMpService wxOpenService;
 
+    //跳转到授权链接
     @GetMapping("/authorize")
     public String authorize( @ApiParam(name = "returnUrl", value = "跳转链接")@RequestParam("returnUrl") String returnUrl) {
         //1. 配置
@@ -46,6 +47,7 @@ public class WechatController {
         return "redirect:" + redirectUrl;
     }
 
+    //确定授权后的处理方法
     @GetMapping("/userInfo")
     public String userInfo(@ApiParam(name = "code", value = "code")@RequestParam("returnUrl") String code,
                            @ApiParam(name = "returnUrl", value = "跳转链接")@RequestParam("returnUrl") String returnUrl ){
@@ -61,6 +63,7 @@ public class WechatController {
         return "redirect:" + returnUrl + "openId = " + openId;
     }
 
+    //跳转二维码页面，生成二维码
     @GetMapping("/qrAuthorize")
     public String qrAuthorize(@RequestParam("returnUrl") String returnUrl) {
         String url = projectUrlConfig.getWechatOpenAuthorize() + "/sell/wechat/qrUserInfo";
@@ -68,6 +71,7 @@ public class WechatController {
         return "redirect:" + redirectUrl;
     }
 
+    //扫码后逻辑登陆
     @GetMapping("/qrUserInfo")
     public String qrUserInfo(@RequestParam("code") String code,
                              @RequestParam("state") String returnUrl) {

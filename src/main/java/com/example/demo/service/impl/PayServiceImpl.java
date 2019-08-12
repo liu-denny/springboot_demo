@@ -33,6 +33,7 @@ public class PayServiceImpl implements PayService {
     @Autowired
     private OrderService orderService;
 
+    //发起支付
     @Override
     public PayResponse create(OrderDTO orderDTO) {
         PayRequest payRequest = new PayRequest();
@@ -48,6 +49,7 @@ public class PayServiceImpl implements PayService {
         return payResponse;
     }
 
+    //支付后微信异步通知，告之微信支付结果
     @Override
     public PayResponse notify(String notifyData) {
         PayResponse payResponse = bestPayService.asyncNotify(notifyData);
@@ -75,6 +77,7 @@ public class PayServiceImpl implements PayService {
         return payResponse;
     }
 
+    //退款
     @Override
     public RefundResponse refund(OrderDTO orderDTO) {
         RefundRequest refundRequest = new RefundRequest();

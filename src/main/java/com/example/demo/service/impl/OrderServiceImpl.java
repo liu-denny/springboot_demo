@@ -17,6 +17,7 @@ import com.example.demo.service.PayService;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.PushMessageService;
 import com.example.demo.utils.KeyUtil;
+import com.example.demo.utils.WebSocket;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private PushMessageService pushMessageService;
 
+    @Autowired
+    private WebSocket webSocket;
+
     @Override
     @Transactional
     public OrderDTO create(OrderDTO orderDTO) {
@@ -95,6 +99,9 @@ public class OrderServiceImpl implements OrderService {
                 new CartDTO(e.getProductId(),e.getProductQuantity())
                 ).collect(Collectors.toList());
         productService.decreaseStock(cartDTOList);
+
+        //发送webSocket消息
+        webSocket.sendMessage(orderDTO.getOrderId());
         return orderDTO;
     }
 
